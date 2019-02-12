@@ -1,0 +1,13 @@
+.main--menu {
+  border: 1px solid #F18389;
+  /* justify-content: flex-end; */
+}
+
+.fa-user-astronaut {
+  font-size: 35px;
+}
+
+.icon--menu {
+  display: flex;
+  justify-content: flex-end;
+}
