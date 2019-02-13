@@ -8,7 +8,7 @@ class SignUp extends Component {
   onSignUp = (e) => {
     e.preventDefault();
 
-    const API_URL = "http://localhost:3001/api/v1"
+    const API_URL = "https://limitless-hamlet-19794.herokuapp.com/api/v1"
     fetch(`${API_URL}/auth/signup`, {
       method: "POST",
       headers: {

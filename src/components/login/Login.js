@@ -14,7 +14,7 @@ class Login extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const API_URL = "http://localhost:3001/api/v1"
+    const API_URL = "https://limitless-hamlet-19794.herokuapp.com/api/v1"
 
     fetch(`${API_URL}/auth/login`, {
       method: "POST",
