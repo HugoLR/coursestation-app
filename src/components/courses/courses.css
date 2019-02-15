@@ -1,0 +1,29 @@
+.courses-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-card {
+  width:286px;
+  height:160.88px
+}
+
+.image-plattform {
+  width:246px;
+  height: 129.19px;
+}
+
+.image-card-dos {
+  width:286px;
+  height:160.88px
+}
+
+.image-plattform-dos {
+  width:246px;
+  height: 129.19px;
+}
+
+.courses-container-card {
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
