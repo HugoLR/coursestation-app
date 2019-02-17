@@ -1,0 +1,25 @@
+.home-container {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.background-video {
+  width: 112.3%;
+  /* position: fixed; */
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  z-index: 1
+}
+
+.home-container-text {
+  border: 1px solid red;
+  width: 112.3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+  bottom: -200px;
+}

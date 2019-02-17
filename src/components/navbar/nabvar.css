@@ -1,13 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Coiny');
+
 .main--menu {
-  border: 1px solid #F18389;
+  /* border: 1px solid #F18389; */
+  /* background-color: #13263E; */
+  background-color: #040710;
   /* justify-content: flex-end; */
+}
+
+.main--menu--elements {
+  margin-right: 50px;
+}
+
+.fa-space-shuttle {
+  transform: rotate(270deg);
+  font-size: 30px;
+  color: #FFFFFF;
+}
+
+.main-menu-logo-title {
+  font-family: 'Coiny', cursive;
+  color: #FFFFFF;
+  font-size: 30px;
 }
 
 .fa-user-astronaut {
   font-size: 35px;
+  color: #FFFFFF;
 }
 
 .icon--menu {
   display: flex;
   justify-content: flex-end;
+}
+
+.main-menu-link {
+  font-family: 'Coiny', cursive;
+  color: #FFFFFF;
+}
+
+.main-menu-button {
+  background-color: transparent;
+  border: none;
+}
+
+.main-menu-dropdown {
+  background-color: transparent;
+  border:none;
+}
+
+.main-menu-dropdown:hover {
+  background-color: transparent
 }
