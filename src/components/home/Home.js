@@ -13,8 +13,6 @@ class Home extends Component {
     }
   }
 
-
-
   handleChange = (e) => {
     e.preventDefault();
     this.setState({
@@ -25,23 +23,21 @@ class Home extends Component {
   render() {
     console.log(this.props)
     return (
-      <Container className="home-container">
+      <div className="home-container">
         <video className="background-video" loop autoPlay>
-          <source src={require('../../video/MilkyWay1H264.mov')} type="video/mp4" />
+          <source src={require('../../video/MilkyWay1H264.mov')} widht={1200} type="video/mp4" />
         </video>
         <div className="home-container-text">
           <div>
-            <i class="fas fa-space-shuttle"></i><span className="main-menu-logo-title">Course Station</span>
+            <h3 className="home-container-phrase">All courses In One Place</h3>
+            <h3 className="home-container-phrase">Search to find your next course</h3>
           </div>
           <div>
-            <h3>All courses In On Place</h3>
-          </div>
-          <div>
-            <input type="text" value={this.state.newquery} onChange={this.handleChange} />
-            <Link to="/courses"><button onClick={() => this.props.onChangeValue(this.state.newquery)}>Search</button></Link>
+            <input type="text" className="home-container-input" value={this.state.newquery} onChange={this.handleChange} placeholder="Search" />
+            <Link to="/courses"><button className="home-container-search" onClick={() => this.props.onChangeValue(this.state.newquery)}>Search</button></Link>
           </div>
         </div>
-      </Container>
+      </div>
     );
   }
 }

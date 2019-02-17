@@ -2,24 +2,60 @@
   margin: 0;
   padding: 0;
   position: absolute;
+  width: 89.19vw;
+  height: 708.750px;
+  /* border: 20px solid red; */
 }
 
 .background-video {
-  width: 112.3%;
-  /* position: fixed; */
+  width: 1280px;
   object-fit: cover;
   object-position: center;
   position: absolute;
-  z-index: 1
+  z-index: 1;
 }
 
 .home-container-text {
-  border: 1px solid red;
   width: 112.3%;
+  height: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   z-index: 2;
   position: relative;
-  bottom: -200px;
+  bottom: -150px;
+}
+
+.home-container-logo {
+  align-self: flex-end;
+}
+
+.home-container-phrase {
+  color: #FFFFFF;
+  font-family: 'Coiny', cursive;
+  text-decoration: underline ;
+  text-align: center;
+}
+
+.home-container-input {
+  background-color: transparent;
+  border: 5px solid #14C0D7;
+  border-radius: 15px;
+  width: 700px;
+  color: white;
+  padding: 6px 6px 6px 6px;
+}
+
+.home-container-search {
+  background-color: #14C0D7;
+  color: #0F0623;
+  border-color: transparent;
+  border-radius: 15px;
+  margin-top: 30px;
+  padding: 3px 6px 3px 6px;
+}
+
+::placeholder {
+  color: #FFFFFF;
 }
