@@ -18,7 +18,7 @@ class Navigationbar extends Component {
     return(
         <Navbar className="main--menu" expand="lg">
           <Navbar.Brand className="main--menu--elements">
-            <Link to="/"><i class="fas fa-space-shuttle"></i><span className="main-menu-logo-title">Course Station</span></Link>
+            <Link to="/"><i className="fas fa-space-shuttle"></i><span className="main-menu-logo-title">Course Station</span></Link>
           </Navbar.Brand>
           <Navbar.Brand>
             <Link className="main-menu-link" to="/about">About</Link>

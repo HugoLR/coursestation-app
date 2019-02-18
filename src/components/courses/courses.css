@@ -1,5 +1,6 @@
 .courses-container{
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -8,22 +9,32 @@
   height:160.88px
 }
 
-.image-plattform {
-  width:246px;
-  height: 129.19px;
-}
-
-.image-card-dos {
-  width:286px;
-  height:160.88px
-}
-
-.image-plattform-dos {
-  width:246px;
-  height: 129.19px;
-}
-
 .courses-container-card {
   margin-right: 30px;
   margin-bottom: 30px;
+  box-shadow: 0 7px 7px #354D5E;
+}
+
+.courses-container-card-title {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.courses-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 20px 20px 20px 0;
+  font-family: 'Coiny', cursive;
+}
+
+.courses-compare-button {
+  position: fixed;
+  top:120px;
+  left: 25px;
+  width: 130px;
+  background-color: #3E768A;
+  border: 1px solid #14C0D7;
+  color: #FFFFFF;
+  border-radius: 10px;
 }
