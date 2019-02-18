@@ -21,7 +21,6 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="home-container">
         <video className="background-video" loop autoPlay>

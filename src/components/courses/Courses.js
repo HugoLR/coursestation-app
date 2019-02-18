@@ -28,7 +28,6 @@ class Courses extends Component {
       }
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
         const coincidences = data.courses.filter(course => {
           const title = course.title.toLowerCase();
 
@@ -48,7 +47,7 @@ class Courses extends Component {
   render() {
     return (
       <React.Fragment>
-        <Link to="/courses/compare" ><button className="courses-compare-button">Compare</button></Link>
+        <Link to="/courses/compare" ><button className="courses-compare-button" onClick={() => this.props.onChangeCourses(this.state.courses)}>Compare</button></Link>
         <div className="courses-header">
           <h2>Results for {this.props.data}</h2>
           <p>Total coincidences: <span>{this.state.courses.length}</span></p>
@@ -57,7 +56,7 @@ class Courses extends Component {
         {
           this.state.courses.map(course => {
             return (
-              <Card className="courses-container-card" style={{ width: '18rem'}}>
+              <Card   className="courses-container-card" style={{ width: '18rem'}}>
               <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
               <Card.Img  className="image-card" variant="top" src={course.image} />
               <ListGroup variant="flush">
