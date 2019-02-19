@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
@@ -6,38 +7,67 @@ import ListGroup from "react-bootstrap/ListGroup"
 
 import "./compare.css"
 
-const URL="http://localhost:3001/api/v1/courses"
-
 class Compare extends Component {
   constructor(){
     super()
 
     this.state = {
-      courses: []
+      courses: [],
+      filterCourses:[],
     }
   }
 
-
-
   componentDidMount(){
     this.setState({
-      courses: this.props.courses
+      courses: this.props.courses,
+      filterCourses: this.props.courses
     })
-    this.props.courses.map(course => {
-      fetch(`${URL}/${course._id}/comments`, {
-        method: 'get',
-        headers:{
-          "Content-Type":'aplication-json'
-        }
-      }).then(response => response.json())
-        .then(data => {
-          console.log(data)
-      })
+  }
+
+  showPriceFirsFilter = () => {
+    var lessThan500 = this.state.courses.filter(course => course.price <= 500)
+    this.setState({
+      filterCourses: lessThan500
+    })
+  }
+
+  showPriceSecondFilter = () => {
+    var lessThan1000 = this.state.courses.filter(course => course.price > 500 && course.price <= 1000)
+    this.setState({
+      filterCourses: lessThan1000
+    })
+  }
+
+  showPriceThirdFilter = () => {
+    var moreThan1000 = this.state.courses.filter(course => course.price > 1000)
+    this.setState({
+      filterCourses: moreThan1000
+    })
+  }
+
+  showBeginnerCourses = () => {
+    var beginnerCourses = this.state.filterCourses.filter(course => course.level === "beginner")
+    this.setState({
+      filterCourses: beginnerCourses
+    })
+  }
+
+  showIntermediateCourses = () => {
+    var intermediateCourses = this.state.filterCourses.filter(course => course.level === "intermediate")
+    this.setState({
+      filterCourses: intermediateCourses
+    })
+  }
+
+  showAdvancedCourses = () => {
+    var advancedCourses = this.state.filterCourses.filter(course => course.level === "advanced")
+    this.setState({
+      filterCourses: advancedCourses
     })
   }
 
   render() {
-    console.log(this.state.courses)
+    console.log(this.state.showCourses)
     return (
       <React.Fragment>
         <h1>Este es compare</h1>
@@ -47,18 +77,18 @@ class Compare extends Component {
               <Card.Title>Price Range</Card.Title>
               <Form.Group controlId="formBasicChecbox">
                 <Form.Check type="checkbox" label="Any price" />
-                <Form.Check type="checkbox" label="Under $500" />
-                <Form.Check type="checkbox" label="Under $10000" />
-                <Form.Check type="checkbox" label="More than $10000" />
+                <Form.Check onClick={this.showPriceFirsFilter}  type="checkbox" label="Under $500" />
+                <Form.Check onClick={this.showPriceSecondFilter} type="checkbox" label="Between $500 and $1000" />
+                <Form.Check onClick={this.showPriceThirdFilter} type="checkbox" label="More than $1000" />
               </Form.Group>
             </Card>
             <Card className="filter-card">
               <Card.Title>Level</Card.Title>
               <Form.Group controlId="formBasicChecbox">
                 <Form.Check type="checkbox" label="All levels" />
-                <Form.Check type="checkbox" label="Beginner" />
-                <Form.Check type="checkbox" label="Intermediate" />
-                <Form.Check type="checkbox" label="Advanced" />
+                <Form.Check onClick={this.showBeginnerCourses} type="checkbox" label="Beginner" />
+                <Form.Check onClick={this.showIntermediateCourses} type="checkbox" label="Intermediate" />
+                <Form.Check onClick={this.showAdvancedCourses} type="checkbox" label="Advanced" />
               </Form.Group>
             </Card>
             <Card className="filter-card">
@@ -74,20 +104,51 @@ class Compare extends Component {
           </div>
           <div className="compare-courses">
           {
+            this.state.filterCourses.length === 0 &&
             this.state.courses.map(course => {
               return (
-                <Card   className="courses-container-card" style={{ width: '18rem'}}>
-                  <Card.Img  className="image-card" variant="top" src={course.image} />
-                  <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
-                  <ListGroup variant="flush">
-                    {course.instructors.length > 0 &&
-                      <ListGroup.Item>Instructor {course.instructors[0]}</ListGroup.Item>
-                    }
-                    <ListGroup.Item><Card.Img variant="top" src={course.plattform} /></ListGroup.Item>
-                    <ListGroup.Item>$ {course.price}</ListGroup.Item>
-                    <ListGroup.Item>$ {course.level}</ListGroup.Item>
-                    <ListGroup.Item>$ {course.level}</ListGroup.Item>
-                  </ListGroup>
+                <Card className="compare-card">
+                  <Card.Img  className="compare-card-image" variant="top" src={course.image} />
+                  <div className="compare-card-second-column">
+                    <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
+                    <ListGroup  className="courses-container-card-listgroups" variant="flush">
+                      {course.instructors.length > 0 &&
+                        <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
+                      }
+                      <div className="courses-container-card-details">
+                        <ListGroup.Item><Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} /></ListGroup.Item>
+                        <ListGroup.Item>${course.price}</ListGroup.Item>
+                        <ListGroup.Item>{course.level}</ListGroup.Item>
+                        <ListGroup.Item>{course.comments.Rating}</ListGroup.Item>
+                        <ListGroup.Item><button>GO</button></ListGroup.Item>
+                      </div>
+                    </ListGroup>
+                  </div>
+                </Card>
+              );
+            })
+          }
+          {
+            this.state.filterCourses.length > 0 &&
+            this.state.filterCourses.map(course => {
+              return (
+                <Card className="compare-card">
+                  <Card.Img  className="compare-card-image" variant="top" src={course.image} />
+                  <div className="compare-card-second-column">
+                    <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
+                    <ListGroup  className="courses-container-card-listgroups" variant="flush">
+                      {course.instructors.length > 0 &&
+                        <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
+                      }
+                      <div className="courses-container-card-details">
+                        <div className="courses-container-card-details-first"><Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} /></div>
+                        <div>{course.price}</div>
+                        <div>{course.level}</div>
+                        <div>{course.comments.Rating}</div>
+                        <div><Link to={`/course/${course._id}`}><button>GO</button></Link></div>
+                      </div>
+                    </ListGroup>
+                  </div>
                 </Card>
               );
             })

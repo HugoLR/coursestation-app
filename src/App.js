@@ -9,6 +9,7 @@ import PrivateRoute from "./components/privateComponent/PrivateComponent"
 import SignUp from "./components/signup/SignUp"
 import Courses from "./components/courses/Courses"
 import Compare from "./components/compare/Compare"
+import Course from "./components/course/Course"
 
 import "./App.css"
 
@@ -44,6 +45,7 @@ class App extends Component {
           <Route path="/signup" exact component={ SignUp } />
           <Route path="/courses" render={(props)=> <Courses {...props} courses={this.state.courses} data={this.state.value} onChangeCourses={this.onChangeCourses} />} exact />
           <Route path="/courses/compare" render={(props)=> <Compare {...props} courses={this.state.courses} />} exact />
+          <Route path="/course/:courseId" component={ Course } />
         </Switch>
       </div>
 

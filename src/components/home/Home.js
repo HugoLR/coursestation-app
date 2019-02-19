@@ -21,6 +21,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(localStorage.getItem('token'))
     return (
       <div className="home-container">
         <video className="background-video" loop autoPlay>

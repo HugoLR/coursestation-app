@@ -1,16 +1,62 @@
 .filter-card {
-  border: 1px solid blue;
   width: 100%;
   padding: 20px;
   background-color: #3E768A;
 }
 
 .compare-grid {
-  border: 1px solid red;
   display: flex;
 }
 
 .card-filter {
   display: flex;
   flex-direction: column;
+}
+
+.compare-courses {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.compare-card {
+  width: 98%;
+  height: 200px;
+  margin: 0 10px 10px 10px;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+.compare-card-image {
+  height: 100%;
+  width: 80%;
+}
+
+.compare-card-second-column {
+
+}
+
+.compare-card-instructor {
+  text-align: center;
+}
+
+.courses-container-card-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.courses-container-card-plattform-image {
+  width: 100%;
+}
+
+.courses-container-card-listgroups {
+  height: inherit;
+}
+
+.courses-container-card-details-first {
+  width: 20%;
+  height: 20%;
 }
