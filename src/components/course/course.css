@@ -1,0 +1,60 @@
+.course-uniquecard {
+  border: 1px solid red;
+  display: flex;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.course-description {
+  border: 1px solid green;
+}
+
+.course-specific-information {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.course-logo-image {
+  width: 100%;
+}
+
+.course-second-card {
+  height: 224px;
+  border: 2px solid green;
+  box-sizing: border-box;
+}
+
+.course-buttons {
+  display: flex;
+  height: 50%;
+  border: 1px solid orange;
+  align-items: flex-end;
+}
+
+.course-button {
+  height: 50px;
+}
+
+.modal-question-one {
+  text-align: center;
+}
+
+.modal-title {
+  text-align: center;
+}
+
+.modal-star-container {
+  display: flex;
+  justify-content: center;
+}
+
+i {
+  font-size: 30px;
+}
+
+.modal-question-two {
+  margin-top: 20px;
+  text-align: center;
+  display: block;
+}

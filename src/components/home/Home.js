@@ -5,12 +5,49 @@ import Container from "react-bootstrap/Container"
 
 import "./home.css"
 
+const URL="http://localhost:3001/api/v1/"
+
+
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newquery:''
+      newquery:'',
+      user: []
     }
+  }
+
+  componentDidMount(){
+    fetch(`${URL}/users`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data)
+        this.setState({
+          users:data.users
+        })
+
+        const token = localStorage.getItem('token')
+
+        let base64Url = token.split('.')[1]
+        let base64 = base64Url.replace('-','+').replace('_', '/')
+        const t = JSON.parse(window.atob(base64))
+
+        console.log(t.email)
+        const currentUser = data.users.filter( user => {
+
+          if (user.email === t.email) {
+            this.setState({user: user})
+            console.log(this.state.user)
+          }
+        })
+      })
+      .catch(err => {
+        console.log(`err:${err}`)
+      })
   }
 
   handleChange = (e) => {
@@ -34,7 +71,7 @@ class Home extends Component {
           </div>
           <div>
             <input type="text" className="home-container-input" value={this.state.newquery} onChange={this.handleChange} placeholder="Search" />
-            <Link to="/courses"><button className="home-container-search" onClick={() => this.props.onChangeValue(this.state.newquery)}>Search</button></Link>
+            <Link to="/courses"><button className="home-container-search" onClick={() => this.props.onChangeValue(this.state.newquery)} onClick={() => this.props.onChangeUsers(this.state.user)}>Search</button></Link>
           </div>
         </div>
       </div>

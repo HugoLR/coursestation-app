@@ -19,7 +19,8 @@ class App extends Component {
 
     this.state = {
       value:'',
-      courses: []
+      courses: [],
+      user:[]
     }
   }
     onChangeValue = (newvalue) => {
@@ -34,18 +35,24 @@ class App extends Component {
       })
     }
 
+    onChangeUsers = (newvalue) => {
+      this.setState({
+        user:newvalue
+      })
+    }
+
   render() {
     return (
       <div>
         <Navigationbar/>
         <Switch>
-          <Route path="/" render={(props) => <Home {...props} data={this.state.value} onChangeValue={this.onChangeValue} />}  exact />
+          <Route path="/" render={(props) => <Home {...props} data={this.state.value} user={this.state.user} onChangeUsers={this.onChangeUsers} onChangeValue={this.onChangeValue} />}  exact />
           <PrivateRoute path="/about" exact component={ About } />
           <Route path="/login" exact component={ Login } />
           <Route path="/signup" exact component={ SignUp } />
           <Route path="/courses" render={(props)=> <Courses {...props} courses={this.state.courses} data={this.state.value} onChangeCourses={this.onChangeCourses} />} exact />
           <Route path="/courses/compare" render={(props)=> <Compare {...props} courses={this.state.courses} />} exact />
-          <Route path="/course/:courseId" component={ Course } />
+          <Route path="/course/:courseId" render={(props)=> <Course {...props} user={this.state.user} />} />
         </Switch>
       </div>
 

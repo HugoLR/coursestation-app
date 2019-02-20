@@ -45,6 +45,7 @@ class Courses extends Component {
   }
 
   render() {
+    console.log(localStorage.getItem('token'))
     return (
       <React.Fragment>
         <Link to="/courses/compare" ><button className="courses-compare-button" onClick={() => this.props.onChangeCourses(this.state.courses)}>Compare</button></Link>
