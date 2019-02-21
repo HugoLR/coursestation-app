@@ -93,7 +93,7 @@ class Navigationbar extends Component {
           </div>
           <div className="main--menu--second">
             {isLoggedIn() &&
-              <p className="username">Welcome {this.state.username}</p>
+              <p className="username">Welcome</p>
             }
           </div>
       </Navbar>

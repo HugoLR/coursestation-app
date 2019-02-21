@@ -112,7 +112,7 @@ class Course extends Component {
       course:this.props.match.params.courseId,
     })
   })
-  // this.send()
+  this.send()
   this.handleClose()
   alert("Thank your comment will help other students")
 }
@@ -158,7 +158,7 @@ class Course extends Component {
               <Image className="course-uniquecard-image-course" src={this.state.course.image}/>
               <div className="course-uniquecard-second_column-buttons">
                 <Button onClick={this.handleShow} className="course-uniquecard-second_column-button" variant="outline-primary">Comment</Button>
-                <Button className="course-uniquecard-second_column-button" variant="outline-primary">Go to the Course</Button>
+                <Button className="course-uniquecard-second_column-button" variant="outline-primary"><a href={`https://www.udemy.com${this.state.course.url}`} target="_blank">Go to the Course</a></Button>
               </div>
             </Card>
           </Card>

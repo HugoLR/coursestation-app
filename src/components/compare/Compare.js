@@ -154,7 +154,7 @@ class Compare extends Component {
                         <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
                       }
                       <div className="courses-container-card-details">
-                        <Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} />
+                        <img className="courses-container-card-plattform-image"  src={course.plattform} />
                         <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>
                         <ListGroup.Item>Level: {course.level}</ListGroup.Item>
                         <ListGroup.Item>{course.comments.Rating}</ListGroup.Item>
