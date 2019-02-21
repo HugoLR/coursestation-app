@@ -31,12 +31,10 @@ class Home extends Component {
         })
 
         const token = localStorage.getItem('token')
-
         let base64Url = token.split('.')[1]
         let base64 = base64Url.replace('-','+').replace('_', '/')
         const t = JSON.parse(window.atob(base64))
 
-        console.log(t.email)
         const currentUser = data.users.filter( user => {
 
           if (user.email === t.email) {
@@ -48,6 +46,7 @@ class Home extends Component {
       .catch(err => {
         console.log(`err:${err}`)
       })
+
   }
 
   handleChange = (e) => {
@@ -71,7 +70,7 @@ class Home extends Component {
           </div>
           <div>
             <input type="text" className="home-container-input" value={this.state.newquery} onChange={this.handleChange} placeholder="Search" />
-            <Link to="/courses"><button className="home-container-search" onClick={() => this.props.onChangeValue(this.state.newquery)} onClick={() => this.props.onChangeUsers(this.state.user)}>Search</button></Link>
+            <Link to="/courses" onClick={() => this.props.onChangeUsers(this.state.user)}><button className="home-container-search" onClick={() => this.props.onChangeValue(this.state.newquery)} >Search</button></Link>
           </div>
         </div>
       </div>

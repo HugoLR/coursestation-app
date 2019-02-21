@@ -1,46 +1,115 @@
-.course-uniquecard {
-  border: 1px solid red;
-  display: flex;
-  width: 70%;
-  margin: 0 auto;
-}
-
-.course-description {
-  border: 1px solid green;
-}
-
-.course-specific-information {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.course-logo-image {
-  width: 100%;
-}
-
-.course-second-card {
-  height: 224px;
-  border: 2px solid green;
+* {
   box-sizing: border-box;
 }
 
-.course-buttons {
+.course-route-container {
+  background-color: #F7F7F7;
+  height: 100vh;
+  padding-top: 25px;
   display: flex;
-  height: 50%;
-  border: 1px solid orange;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
 }
 
-.course-button {
-  height: 50px;
+.course-uniquecard {
+  border: 1px dashed black;
+  width: 70%;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 12px 12px 12px #354D5E;
 }
 
-.modal-question-one {
+.course-uniquecard-characteristics {
+  width: 70%;
+}
+
+.course-uniquecard-second_column {
+  width: 30%;
+}
+
+.course-uniquecard-main_information {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.course-uniquecard-second_information {
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text {
+  margin: 0;
+  width: 100%;
   text-align: center;
 }
 
-.modal-title {
+.space {
+  height: 33.33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px dashed black;
+}
+
+.course-uniquecard-image-plattform {
+  width: 15%;
+  height: 100%;
+}
+
+.comments-length {
+  margin-right: 10px;
+}
+
+.course-uniquecard-image-course {
+  height: 70%;
+}
+
+.course-uniquecard-second_column-buttons {
+  height: 30%;
+  display: flex;
+  align-items: flex-end;
+  align-self: flex-end;
+}
+
+.course-uniquecard-second_column-button {
+  height: 50%;
+}
+
+.user-comments-container {
+  border-radius: 20px;
+  padding: 10px;
+  width: 50%;
+  align-self: flex-start;
+  margin-left: 195px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  background-color: #F0F2F5;
+}
+
+.user-comments-container .fa-user-astronaut {
+  color: black;
+  margin-right: 10px;
+}
+
+.comment-text {
+  font-weight: bold;
+  margin: 0;
+}
+
+.user-comments-rating {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.modal-question-one {
   text-align: center;
 }
 
@@ -57,4 +126,13 @@ i {
   margin-top: 20px;
   text-align: center;
   display: block;
+}
+
+.comments-rating-byuser {
+  display: flex;
+}
+
+.comment-text-review {
+  margin: 0;
+  padding: 0;
 }

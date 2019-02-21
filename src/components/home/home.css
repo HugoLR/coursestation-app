@@ -48,12 +48,13 @@
 }
 
 .home-container-search {
+  width: 110px;
   background-color: #14C0D7;
   color: #0F0623;
   border-color: transparent;
   border-radius: 15px;
   margin-top: 30px;
-  padding: 3px 6px 3px 6px;
+  padding: 4px 6px 4px 6px;
 }
 
 ::placeholder {

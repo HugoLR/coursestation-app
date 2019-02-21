@@ -1,11 +1,13 @@
 .filter-card {
   width: 100%;
   padding: 20px;
-  background-color: #3E768A;
+  margin-left: 20px;
 }
 
 .compare-grid {
   display: flex;
+  padding-top: 25px;
+  background-color: #F7F7F7;
 }
 
 .card-filter {
@@ -16,12 +18,13 @@
 .compare-courses {
   width: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 
 .compare-card {
-  width: 98%;
-  height: 200px;
+  width: 80%;
+  height: 230px;
   margin: 0 10px 10px 10px;
   display: flex;
   flex-direction: row;
@@ -34,7 +37,7 @@
 }
 
 .compare-card-second-column {
-
+    height: 100%;
 }
 
 .compare-card-instructor {
@@ -44,19 +47,37 @@
 .courses-container-card-details {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  height: 100%;
+  align-items: center;
+  height: 45%;
 }
 
 .courses-container-card-plattform-image {
-  width: 100%;
+  width: 20%;
+  align-self: center;
 }
 
 .courses-container-card-listgroups {
-  height: inherit;
+  height: 50%;
 }
 
 .courses-container-card-details-first {
   width: 20%;
   height: 20%;
+}
+
+.fa-hand-holding-usd {
+  margin-right: 5px
+}
+
+.compare-course-go-button {
+  margin-right: 10px;
+}
+
+.fa-star {
+  font-size: 13px;
+  color: #FDB32B;
+}
+
+.filter-card-stars {
+  display: flex;
 }

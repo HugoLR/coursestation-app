@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Coiny');
 
 .main--menu {
-  /* border: 1px solid #F18389; */
-  /* background-color: #13263E; */
   background-color: #0F0623;
-  /* justify-content: flex-end; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.main--menu--first {
+  display: flex;
+  align-items: center;
 }
 
 .main--menu--elements {
@@ -50,4 +54,16 @@
 
 .main-menu-dropdown:hover {
   background-color: transparent
+}
+
+.main--menu--second {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  color: white;
+  font-family: 'Coiny', cursive;
+  font-size: 20px;
+  margin: 0;
 }

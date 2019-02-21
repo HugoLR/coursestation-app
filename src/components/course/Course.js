@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 
-import "./course.css"
-import Image from "react-bootstrap/Image"
-import Modal from "react-bootstrap/Modal"
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import StarRatingComponent from "react-star-rating-component"
+import "./course.css";
+import Image from "react-bootstrap/Image";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import StarRatingComponent from "react-star-rating-component";
+import Card from "react-bootstrap/Card"
 
+const Nexmo = require('nexmo');
 
 const API_URL = "https://limitless-hamlet-19794.herokuapp.com/api/v1"
 
@@ -20,13 +22,17 @@ class Course extends Component {
       show: false,
       rating: 1,
       commentText: "",
-      user: this.props.user
+      user: this.props.user,
+      commentsByCourse: [],
+      ratingStars:[]
     }
   }
 
 
+
+
   componentDidMount() {
-    fetch(`${API_URL}/courses/${this.props.match.params.courseId}/`, {
+    fetch(`${API_URL}/courses/${this.props.match.params.courseId}`, {
       method: 'get',
       headers: {
         "Content-Type": "application/json"
@@ -38,12 +44,24 @@ class Course extends Component {
           course: data.courses,
           comments: data.courses.comments.length
         })
-      })
+      }).then(this.showComents())
       .catch(err => {
         console.log(`err: ${err}`)
       })
   }
 
+ send = () => {
+    const nexmo = new Nexmo({
+      apiKey: '8003c938',
+      apiSecret: '5I5UdgaddIhaCix2'
+    })
+
+    const from = 'Nexmo'
+    const to = '527225025782'
+    const text = '!Has creado un comentario, gracias por ayudar a crecer la comunidad de Course Station'
+
+    nexmo.message.sendSms(from, to, text)
+ }
 
   handleClose = () => {
     this.setState({show: false});
@@ -62,6 +80,25 @@ class Course extends Component {
    this.setState({commentText:e.target.value})
  }
 
+ showComents = () => {
+   fetch(`${API_URL}/courses/${this.props.match.params.courseId}/comments`, {
+     method: 'GET',
+     headers: {
+       "Content-Type": "application/json"
+     }
+   }).then(response => response.json())
+      .then(data => {
+        console.log(data)
+        this.setState({
+          commentsByCourse: data.data,
+          coments: data.coincidences,
+        })
+      })
+      .catch(err => {
+        console.log(`err: ${err}`)
+      })
+ }
+
   onCreateReview = () => {
   fetch(`${API_URL}/users/${this.state.user._id}/comments`, {
     method: 'POST',
@@ -75,42 +112,59 @@ class Course extends Component {
       course:this.props.match.params.courseId,
     })
   })
-
+  // this.send()
   this.handleClose()
   alert("Thank your comment will help other students")
 }
 
-  render() {
+  onSubmitChanges = () => {
+    this.onCreateReview()
+    this.showComents()
+  }
 
+  ratingAverage = () => {
+    var sum = 0;
+    for (var i = 0; i < this.state.course.commentsRating.length; i++) {
+      sum += parseInt(this.state.course.commentsRating[i], 10)
+      this.setState({
+        ratingStars: sum/this.state.comments
+      })
+    }
+    console.log(this.state.ratingStars)
+  }
+
+  render() {
+    console.log(this.state.course)
     //Variable para manejar las estrellas del rating
     const { rating } = this.state
 
     return (
-      <React.Fragment>
-        <h1>Este es Course</h1>
-        <div className="course-uniquecard">
-          <div className="course-description">
-            <h2>{this.state.course.title}</h2>
-            <p>Description</p>
-            <p>{this.state.course.instructors}</p>
-            <div className="course-specific-information">
-              <Image height={60} width={60} src={this.state.course.plattform} />
-              <p>Rating</p>
-              <p>level</p>
-              <p>comments length</p>
-            </div>
-          </div>
-          <div className="course-second-card">
-            <Image className="course-logo-image" src={this.state.course.image} />
-            <div className="course-buttons">
-              <button onClick={this.handleShow} className="course-button">Write a review</button>
-              <button className="course-button">Go to the course </button>
-            </div>
-          </div>
-        </div>
-        <div>
+        <div className="course-route-container">
+          <Card className="course-uniquecard">
+            <Card className="course-uniquecard-characteristics">
+              <div className="course-uniquecard-main_information">
+                <h3 className="text space">{this.state.course.title}</h3>
+                <p className="text space">Learn {this.state.course.title} with {this.state.course.instructors}</p>
+                <p className="text space">{this.state.course.instructors}</p>
+              </div>
+              <div className="course-uniquecard-second_information">
+                <Image className="course-uniquecard-image-plattform" src={this.state.course.plattform}/>
+                <p className="text">Rating average</p>
+                <p className="text">Level {this.state.course.level}</p>
+                <p className="text comments-length"><i class="far fa-comments"></i>{this.state.comments}</p>
+              </div>
+            </Card>
+            <Card className="course-uniquecard-second_column">
+              <Image className="course-uniquecard-image-course" src={this.state.course.image}/>
+              <div className="course-uniquecard-second_column-buttons">
+                <Button onClick={this.handleShow} className="course-uniquecard-second_column-button" variant="outline-primary">Comment</Button>
+                <Button className="course-uniquecard-second_column-button" variant="outline-primary">Go to the Course</Button>
+              </div>
+            </Card>
+          </Card>
+
           <Modal show={this.state.show} onHide={this.handleClose}>
-              <Modal.Header closeButton>
+              <Modal.Header className="modal-header" closeButton>
                 <Modal.Title className="modal-title">Review {this.state.course.title}</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -132,13 +186,60 @@ class Course extends Component {
                 <Button variant="secondary" onClick={this.handleClose}>
                   Close
                 </Button>
-                <Button  onClick={this.onCreateReview} >
+                <Button  onClick={this.onSubmitChanges} >
                   Submit Review
                 </Button>
               </Modal.Footer>
           </Modal>
+          {
+            this.state.commentsByCourse.map(comment => {
+              return (
+                <div className="user-comments-container">
+                  <div className="user-comments-rating">
+                      <p className="comment-text"><i class="fas fa-user-astronaut"></i>{comment.username}</p>
+                      <p className="comment-text-review">{comment.text}</p>
+                  </div>
+                  {
+                    comment.ratings === 1 &&
+                    <div className="comments-rating-byuser">
+                      <i className="fas fa-star"></i>
+                    </div>
+                  }
+                  {
+                    comment.ratings === 2 &&
+                    <div className="comments-rating-byuser">
+                      <i className="fas fa-star"></i><i className="fas fa-star"></i>
+                    </div>
+                  }
+                  {
+                    comment.ratings === 3 &&
+                    <div className="comments-rating-byuser">
+                      <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                    </div>
+                  }
+                  {
+                    comment.ratings === 4 &&
+                    <div className="comments-rating-byuser">
+                      <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                    </div>
+                  }
+                  {
+                    comment.ratings === 4 &&
+                    <div className="comments-rating-byuser">
+                      <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                    </div>
+                  }
+                  {
+                    comment.ratings === 5 &&
+                    <div className="comments-rating-byuser">
+                      <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                    </div>
+                  }
+                </div>
+              )
+            })
+          }
         </div>
-      </React.Fragment>
     );
   }
 }

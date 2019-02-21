@@ -1,0 +1,19 @@
+.login-container {
+  height: 90vh;
+  background: url("../../images/login.png");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  background-color: rgba(0,0,0, 0.5);
+  width: 40%;
+  padding: 45px;
+  border-radius: 30px;
+}
+
+.login-part {
+  color: white;
+}

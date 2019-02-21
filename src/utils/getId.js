@@ -1,21 +1,34 @@
-const jwt = require('jsonwebtoken');
+
 
 const getId = () => {
-  const token = localStorage.getItem("token");
-
-    if(typeof token !== "undefined") {
-
-      const decoded = jwt.verify(token, 3000, (err, decoded) => {
-        if (err) {
-          localStorage.removeItem("token")
-          return false
-        }
-
-        return decoded
+  fetch(`${URL}/users`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json"
+    },
+  }).then(response => response.json())
+    .then(data => {
+      console.log(data)
+      this.setState({
+        users:data.users
       })
-      return decoded._id
-    }
-    return false
+
+      const token = localStorage.getItem('token')
+      let base64Url = token.split('.')[1]
+      let base64 = base64Url.replace('-','+').replace('_', '/')
+      const t = JSON.parse(window.atob(base64))
+
+      const currentUser = data.users.filter( user => {
+
+        if (user.email === t.email) {
+          this.setState({user: user})
+          console.log(this.state.user)
+        }
+      })
+    })
+    .catch(err => {
+      console.log(`err:${err}`)
+    })
 }
 
 module.exports = { getId }

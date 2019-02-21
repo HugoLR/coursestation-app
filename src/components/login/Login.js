@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import "./login.css";
 
 class Login extends Component {
   state = {
@@ -52,24 +53,26 @@ class Login extends Component {
 
   render() {
     return (
-      <Form onSubmit={ this.onSubmit }>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control name="email" type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
+      <div className="login-container">
+        <Form className="login-form" onSubmit={ this.onSubmit }>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label className="login-part">Email address</Form.Label>
+            <Form.Control name="email" type="email" placeholder="Enter email" />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control name="password" type="password" placeholder="Password" />
-        </Form.Group>
-        { this.state.error.status && <p>{ this.state.error.message }</p>}
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label className="login-part">Password</Form.Label>
+            <Form.Control name="password" type="password" placeholder="Password" />
+          </Form.Group>
+          { this.state.error.status && <p>{ this.state.error.message }</p>}
+          <Button variant="primary" type="submit">
+            Log In
+          </Button>
+        </Form>
+      </div>
     );
   }
 }

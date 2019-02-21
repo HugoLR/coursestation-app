@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import "./signup.css"
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
@@ -32,27 +34,29 @@ class SignUp extends Component {
 
   render() {
     return (
-      <Form onSubmit={ this.onSignUp}>
-        <Form.Group controlId="formGroupName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control name="name" type="text" placeholder="Enter your name" />
-        </Form.Group>
-        <Form.Group controlId="formGroupUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control name="username" type="text" placeholder="Enter a username" />
-        </Form.Group>
-        <Form.Group controlId="formGroupEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control name="email" type="email" placeholder="Enter email" />
-        </Form.Group>
-        <Form.Group controlId="formGroupPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control name="password" type="password" placeholder="Password" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+      <div className="signup-container">
+        <Form  className="signup-form" onSubmit={ this.onSignUp}>
+          <Form.Group controlId="formGroupName">
+            <Form.Label className="signup-part">Name</Form.Label>
+            <Form.Control name="name" type="text" placeholder="Enter your name" />
+          </Form.Group>
+          <Form.Group controlId="formGroupUsername">
+            <Form.Label className="signup-part">Username</Form.Label>
+            <Form.Control name="username" type="text" placeholder="Enter a username" />
+          </Form.Group>
+          <Form.Group controlId="formGroupEmail">
+            <Form.Label className="signup-part">Email address</Form.Label>
+            <Form.Control name="email" type="email" placeholder="Enter email" />
+          </Form.Group>
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label className="signup-part">Password</Form.Label>
+            <Form.Control name="password" type="password" placeholder="Password" />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Create Account
+          </Button>
+        </Form>
+      </div>
     )
   }
 }

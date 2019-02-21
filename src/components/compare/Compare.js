@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
 import ListGroup from "react-bootstrap/ListGroup"
+import Button from "react-bootstrap/Button"
 
 import "./compare.css"
 
@@ -21,6 +22,13 @@ class Compare extends Component {
     this.setState({
       courses: this.props.courses,
       filterCourses: this.props.courses
+    })
+  }
+
+  showAnyPriceFilter = () => {
+    var allprices = this.state.courses.filter(course => course.price > 0)
+    this.setState({
+      filterCourses: allprices
     })
   }
 
@@ -42,6 +50,13 @@ class Compare extends Component {
     var moreThan1000 = this.state.courses.filter(course => course.price > 1000)
     this.setState({
       filterCourses: moreThan1000
+    })
+  }
+
+  showAllLevelCourses = () => {
+    var allLevelCourses = this.state.filterCourses.filter(course => course.level === "beginner" || course.level === "intermediate" || course.level === "advanced")
+    this.setState({
+      filterCourses: allLevelCourses
     })
   }
 
@@ -70,13 +85,12 @@ class Compare extends Component {
     console.log(this.state.showCourses)
     return (
       <React.Fragment>
-        <h1>Este es compare</h1>
         <div className="compare-grid">
           <div>
             <Card className="filter-card">
               <Card.Title>Price Range</Card.Title>
               <Form.Group controlId="formBasicChecbox">
-                <Form.Check type="checkbox" label="Any price" />
+                <Form.Check onClick={this.showAnyPriceFilter} type="checkbox" label="Any price" />
                 <Form.Check onClick={this.showPriceFirsFilter}  type="checkbox" label="Under $500" />
                 <Form.Check onClick={this.showPriceSecondFilter} type="checkbox" label="Between $500 and $1000" />
                 <Form.Check onClick={this.showPriceThirdFilter} type="checkbox" label="More than $1000" />
@@ -85,20 +99,45 @@ class Compare extends Component {
             <Card className="filter-card">
               <Card.Title>Level</Card.Title>
               <Form.Group controlId="formBasicChecbox">
-                <Form.Check type="checkbox" label="All levels" />
+                <Form.Check onClick={this.showAllLevelCourses} type="checkbox" label="All levels" />
                 <Form.Check onClick={this.showBeginnerCourses} type="checkbox" label="Beginner" />
                 <Form.Check onClick={this.showIntermediateCourses} type="checkbox" label="Intermediate" />
                 <Form.Check onClick={this.showAdvancedCourses} type="checkbox" label="Advanced" />
               </Form.Group>
             </Card>
             <Card className="filter-card">
-              <Card.Title>Course Station Ranking</Card.Title>
+              <Card.Title>Course Station Ranking<i className="course-station-icon-compare" className="fas fa-space-shuttle"></i></Card.Title>
               <Form.Group controlId="formBasicChecbox">
-                <Form.Check type="checkbox" label="Five stars" />
-                <Form.Check type="checkbox" label="Four stars" />
-                <Form.Check type="checkbox" label="Three stars" />
-                <Form.Check type="checkbox" label="Two stars" />
-                <Form.Check type="checkbox" label="One star" />
+                <div className="filter-card-stars">
+                  <Form.Check type="checkbox" label="Five stars" />
+                  <div className="filter-card-stars-icons">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                <div className="filter-card-stars">
+                  <Form.Check type="checkbox" label="Four stars" />
+                  <div  className="filter-card-stars-icons">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                <div className="filter-card-stars">
+                  <Form.Check type="checkbox" label="Three stars" />
+                  <div  className="filter-card-stars-icons">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                <div className="filter-card-stars">
+                  <Form.Check type="checkbox" label="Two stars" />
+                  <div  className="filter-card-stars-icons">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                <div className="filter-card-stars">
+                  <Form.Check type="checkbox" label="One stars" />
+                  <div  className="filter-card-stars-icons">
+                    <i className="fas fa-star"></i>
+                  </div>
+                </div>
               </Form.Group>
             </Card>
           </div>
@@ -111,18 +150,16 @@ class Compare extends Component {
                   <Card.Img  className="compare-card-image" variant="top" src={course.image} />
                   <div className="compare-card-second-column">
                     <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
-                    <ListGroup  className="courses-container-card-listgroups" variant="flush">
                       {course.instructors.length > 0 &&
                         <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
                       }
                       <div className="courses-container-card-details">
-                        <ListGroup.Item><Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} /></ListGroup.Item>
-                        <ListGroup.Item>${course.price}</ListGroup.Item>
-                        <ListGroup.Item>{course.level}</ListGroup.Item>
+                        <Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} />
+                        <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>
+                        <ListGroup.Item>Level: {course.level}</ListGroup.Item>
                         <ListGroup.Item>{course.comments.Rating}</ListGroup.Item>
-                        <ListGroup.Item><button>GO</button></ListGroup.Item>
+                        <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
                       </div>
-                    </ListGroup>
                   </div>
                 </Card>
               );
@@ -136,18 +173,16 @@ class Compare extends Component {
                   <Card.Img  className="compare-card-image" variant="top" src={course.image} />
                   <div className="compare-card-second-column">
                     <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
-                    <ListGroup  className="courses-container-card-listgroups" variant="flush">
                       {course.instructors.length > 0 &&
                         <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
                       }
                       <div className="courses-container-card-details">
-                        <div className="courses-container-card-details-first"><Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} /></div>
-                        <div>{course.price}</div>
-                        <div>{course.level}</div>
+                        <Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} />
+                        <div><i class="fas fa-hand-holding-usd"></i>${course.price}</div>
+                        <div>Level: {course.level}</div>
                         <div>{course.comments.Rating}</div>
-                        <div><Link to={`/course/${course._id}`}><button>GO</button></Link></div>
+                        <div className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></div>
                       </div>
-                    </ListGroup>
                   </div>
                 </Card>
               );

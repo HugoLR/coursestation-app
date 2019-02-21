@@ -20,7 +20,8 @@ class App extends Component {
     this.state = {
       value:'',
       courses: [],
-      user:[]
+      user:[],
+      username: ""
     }
   }
     onChangeValue = (newvalue) => {
@@ -41,12 +42,18 @@ class App extends Component {
       })
     }
 
+    OnchangeUsername = (newvalue) => {
+      this.setState({
+        username:newvalue
+      })
+    }
+
   render() {
     return (
       <div>
-        <Navigationbar/>
+        <Navigationbar username={this.state.username}/>
         <Switch>
-          <Route path="/" render={(props) => <Home {...props} data={this.state.value} user={this.state.user} onChangeUsers={this.onChangeUsers} onChangeValue={this.onChangeValue} />}  exact />
+          <Route path="/" render={(props) => <Home {...props} data={this.state.value} username={this.state.username} user={this.state.user} onChangeUsers={this.onChangeUsers} onChangeValue={this.onChangeValue}  onchangeUsername={this.onChangeUsername}/>}  exact />
           <PrivateRoute path="/about" exact component={ About } />
           <Route path="/login" exact component={ Login } />
           <Route path="/signup" exact component={ SignUp } />

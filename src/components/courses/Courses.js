@@ -45,10 +45,11 @@ class Courses extends Component {
   }
 
   render() {
+    console.log(this.props)
     console.log(localStorage.getItem('token'))
     return (
-      <React.Fragment>
-        <Link to="/courses/compare" ><button className="courses-compare-button" onClick={() => this.props.onChangeCourses(this.state.courses)}>Compare</button></Link>
+      <div className="courses-main-container">
+        <Link to="/courses/compare" ><button className="courses-compare-button" onClick={() => this.props.onChangeCourses(this.state.courses)}><i class="fas fa-filter"></i>Compare Courses</button></Link>
         <div className="courses-header">
           <h2>Results for {this.props.data}</h2>
           <p>Total coincidences: <span>{this.state.courses.length}</span></p>
@@ -71,7 +72,7 @@ class Courses extends Component {
           })
         }
         </Container>
-      </React.Fragment>
+      </div>
     );
   }
 }
