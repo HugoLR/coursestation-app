@@ -14,14 +14,14 @@ class Compare extends Component {
 
     this.state = {
       courses: [],
-      filterCourses:[],
+      filterCourses: []
+
     }
   }
 
   componentDidMount(){
     this.setState({
-      courses: this.props.courses,
-      filterCourses: this.props.courses
+      courses: this.props.courses
     })
   }
 
@@ -82,7 +82,7 @@ class Compare extends Component {
   }
 
   render() {
-    console.log(this.state.showCourses)
+    console.log(this.props.courses)
     return (
       <React.Fragment>
         <div className="compare-grid">
@@ -148,21 +148,66 @@ class Compare extends Component {
               return (
                 <Card className="compare-card">
                   <div className="compare-card-image-container">
-                  <Card.Img  className="compare-card-image" variant="top" src={course.image} style={{width: '255px', height: '228px'}} />
+                  {
+                    typeof course.image === "undefined" &&
+                    <Card.Img  className="compare-card-image" variant="top" src={course.thumbnail} style={{width: '255px', height: '228px'}} />
+                  }
+                  {
+                    typeof course.thumbnail === "undefined" &&
+                    <Card.Img  className="compare-card-image" variant="top" src={course.image} style={{width: '255px', height: '228px'}} />
+                  }
+
+
                   </div>
                   <div className="compare-card-second-column">
                     <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
-                      {course.instructors.length > 0 &&
-                        <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
-                      }
+                    { (typeof course.summary == "undefined"  && typeof course.instructors !== "undefined") &&
+
+                    <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
+                    }
+                    { typeof course.instructors == "undefined"  &&
+
+                      <ListGroup.Item className="compare-card-instructor">Instructor {course.summary.split(" ").slice(0, 1).join(" ")}</ListGroup.Item>
+                    }
+
                       <div className="courses-container-card-details">
-                        <img className="courses-container-card-plattform-image"  src={course.plattform} />
-                        <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>
-                        <ListGroup.Item>Level: {course.level}</ListGroup.Item>
-                        <ListGroup.Item>{course.comments.Rating}</ListGroup.Item>
-                        <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
+                        {
+                          typeof course.plattform !== "undefined" &&
+                          <img className="courses-container-card-plattform-image"  src={course.plattform} />
+                        }
+                        {
+                          typeof course.plattform === "undefined" &&
+                          <img style={{width:"113.52px", height:"59.59px"}} className="courses-container-card-plattform-image"  src="https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg" />
+
+                        }
+                        {
+                          typeof course.price !== "undefined" &&
+                          <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>
+                        }
+                        {
+                          typeof course.price === "undefined" &&
+                          <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>$746</ListGroup.Item>
+                        }
+                        {
+                          course.title.includes("Introduction") &&
+                          <ListGroup.Item>Level: beginner</ListGroup.Item>
+                        }
+                        {
+                          course.title.includes("Advance") &&
+                          <ListGroup.Item>Level: advanced</ListGroup.Item>
+                        }
+                        {
+                          !course.title.includes("Advance") && !course.title.includes("Introduction") &&
+                          <ListGroup.Item>Level: intermediate</ListGroup.Item>
+                        }
+
+                        { typeof course._id !== "undefined" &&
+                          <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
+                        }
                       </div>
                   </div>
+
+
                 </Card>
               );
             })

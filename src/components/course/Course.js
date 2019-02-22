@@ -143,6 +143,7 @@ class Course extends Component {
   }
 
   onDeletComment = () => {
+    console.log("Esta es la variable que querio",  this.state.ownerComment._id)
     fetch(`${API_URL}/users/${this.state.user._id}/comments`, {
       method: 'DELETE',
       headers: {

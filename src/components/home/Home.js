@@ -52,7 +52,7 @@ class Home extends Component {
   handleChange = (e) => {
     e.preventDefault();
     this.setState({
-      newquery: e.target.value
+      newquery: e.target.value.toLowerCase()
     })
   }
 
