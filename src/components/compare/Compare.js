@@ -147,7 +147,9 @@ class Compare extends Component {
             this.state.courses.map(course => {
               return (
                 <Card className="compare-card">
-                  <Card.Img  className="compare-card-image" variant="top" src={course.image} />
+                  <div className="compare-card-image-container">
+                  <Card.Img  className="compare-card-image" variant="top" src={course.image} style={{width: '255px', height: '228px'}} />
+                  </div>
                   <div className="compare-card-second-column">
                     <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
                       {course.instructors.length > 0 &&
@@ -170,7 +172,9 @@ class Compare extends Component {
             this.state.filterCourses.map(course => {
               return (
                 <Card className="compare-card">
-                  <Card.Img  className="compare-card-image" variant="top" src={course.image} />
+                  <div className="compare-card-image-container">
+                    <Card.Img  className="compare-card-image" variant="top" src={course.image} style={{width: '255px', height: '228px'}} />
+                  </div>
                   <div className="compare-card-second-column">
                     <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
                       {course.instructors.length > 0 &&

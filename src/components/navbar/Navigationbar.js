@@ -27,7 +27,6 @@ class Navigationbar extends Component {
       },
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
         this.setState({
           users:data.users
         })
@@ -44,7 +43,7 @@ class Navigationbar extends Component {
               user: user,
               username:user.username
             })
-            console.log(this.state.user)
+            // console.log(this.state.user)
           }
         })
       })
@@ -62,7 +61,6 @@ class Navigationbar extends Component {
   }
 
   render() {
-    console.log(this.state.username)
     return(
         <Navbar className="main--menu" expand="lg">
             <div className="main--menu--first">

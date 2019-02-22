@@ -25,7 +25,7 @@ class Home extends Component {
       },
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         this.setState({
           users:data.users
         })
@@ -57,7 +57,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log(localStorage.getItem('token'))
+    // console.log(localStorage.getItem('token'))
     return (
       <div className="home-container">
         <video className="background-video" loop autoPlay>

@@ -2,9 +2,12 @@
   box-sizing: border-box;
 }
 
+#root{
+  background-color: #F7F7F7;
+  height: 100%;
+}
 .course-route-container {
   background-color: #F7F7F7;
-  height: 100vh;
   padding-top: 25px;
   display: flex;
   flex-direction: column;
@@ -135,4 +138,34 @@ i {
 .comment-text-review {
   margin: 0;
   padding: 0;
+}
+
+.comments-icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.fa-trash-alt {
+  font-size: 20px;
+}
+
+.comment-delete-button,
+.comment-edit-button
+ {
+  background-color: transparent;
+  border: none;
+}
+
+.fa-comments {
+  margin-right: 7px;
+}
+
+.fa-edit {
+  font-size: 21px;
+}
+
+.comments-crud-buttons {
+  display: flex;
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 import "./course.css";
 import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
@@ -18,18 +17,18 @@ class Course extends Component {
     super(props);
     this.state = {
       course: [],
-      comments: 0,
+      comments: "",
       show: false,
+      smShow: false,
       rating: 1,
       commentText: "",
       user: this.props.user,
       commentsByCourse: [],
-      ratingStars:[]
+      ownerComment: [],
+      ratingStars:[],
+      editShow:false,
     }
   }
-
-
-
 
   componentDidMount() {
     fetch(`${API_URL}/courses/${this.props.match.params.courseId}`, {
@@ -39,10 +38,9 @@ class Course extends Component {
       }
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         this.setState({
           course: data.courses,
-          comments: data.courses.comments.length
         })
       }).then(this.showComents())
       .catch(err => {
@@ -50,7 +48,7 @@ class Course extends Component {
       })
   }
 
- send = () => {
+ sendMessage = () => {
     const nexmo = new Nexmo({
       apiKey: '8003c938',
       apiSecret: '5I5UdgaddIhaCix2'
@@ -64,18 +62,22 @@ class Course extends Component {
  }
 
   handleClose = () => {
-    this.setState({show: false});
+    this.setState({
+      show: false,
+      smShow: false,
+      editShow:false
+    });
   }
 
   handleShow = () => {
     this.setState({show: true});
   }
 
-  onStarClick = (nextValue, prevValue, name) =>{
+  onStarClick = (nextValue, prevValue, name) => {
    this.setState({rating: nextValue});
  }
 
- handleTextComment = (e) => {
+  handleTextComment = (e) => {
    e.preventDefault()
    this.setState({commentText:e.target.value})
  }
@@ -91,7 +93,14 @@ class Course extends Component {
         console.log(data)
         this.setState({
           commentsByCourse: data.data,
-          coments: data.coincidences,
+          comments: data.coincidences
+        })
+        const actuallComment = data.data.filter(comment =>{
+          if (comment.user === this.state.user._id) {
+            this.setState({
+              ownerComment:comment
+            })
+          }
         })
       })
       .catch(err => {
@@ -112,31 +121,74 @@ class Course extends Component {
       course:this.props.match.params.courseId,
     })
   })
-  this.send()
+  // this.sendMessage()
   this.handleClose()
-  alert("Thank your comment will help other students")
+  alert("Thanks, your comment will help other students")
 }
+
+  onUpdateComment = () => {
+    fetch(`${API_URL}/users/${this.state.user._id}/comments`, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        commentId: this.state.ownerComment._id,
+        text:this.state.commentText,
+        ratings:this.state.rating
+      })
+    })
+
+    this.handleClose()
+  }
+
+  onDeletComment = () => {
+    fetch(`${API_URL}/users/${this.state.user._id}/comments`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        commentId: this.state.ownerComment._id
+      })
+    })
+
+    this.handleClose()
+  }
 
   onSubmitChanges = () => {
     this.onCreateReview()
     this.showComents()
   }
 
-  ratingAverage = () => {
-    var sum = 0;
-    for (var i = 0; i < this.state.course.commentsRating.length; i++) {
-      sum += parseInt(this.state.course.commentsRating[i], 10)
-      this.setState({
-        ratingStars: sum/this.state.comments
-      })
-    }
-    console.log(this.state.ratingStars)
+  onUpdateChanges = () => {
+    this.onUpdateComment()
+    this.showComents()
   }
 
+  onDeleteChanges = () => {
+    this.onDeletComment()
+    this.showComents()
+  }
+
+  // ratingAverage = () => {
+  //   var sum = 0;
+  //   for (var i = 0; i < this.state.course.commentsRating.length; i++) {
+  //     sum += parseInt(this.state.course.commentsRating[i], 10)
+  //     this.setState({
+  //       ratingStars: sum/this.state.comments
+  //     })
+  //   }
+  //   console.log(this.state.ratingStars)
+  // }
+
   render() {
-    console.log(this.state.course)
+    console.log(this.state.ownerComment)
     //Variable para manejar las estrellas del rating
     const { rating } = this.state
+
+    //Variable para modal de eliminar comentarios
+    let smClose = () => this.setState({ smShow: false });
 
     return (
         <div className="course-route-container">
@@ -144,7 +196,7 @@ class Course extends Component {
             <Card className="course-uniquecard-characteristics">
               <div className="course-uniquecard-main_information">
                 <h3 className="text space">{this.state.course.title}</h3>
-                <p className="text space">Learn {this.state.course.title} with {this.state.course.instructors}</p>
+                <p className="text space">Take {this.state.course.title} with {this.state.course.instructors}</p>
                 <p className="text space">{this.state.course.instructors}</p>
               </div>
               <div className="course-uniquecard-second_information">
@@ -191,6 +243,58 @@ class Course extends Component {
                 </Button>
               </Modal.Footer>
           </Modal>
+
+          <Modal
+          size="sm"
+          show={this.state.smShow}
+          onHide={smClose}
+          aria-labelledby="example-modal-sizes-title-sm"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-modal-sizes-title-sm">
+              Are you sure you want to delete your comment?
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button onClick={this.onDeleteChanges}>
+              Delete
+            </Button>
+          </Modal.Body>
+        </Modal>
+
+        <Modal show={this.state.editShow} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h3 className="modal-question-one">Update Rate</h3>
+            <div className="modal-star-container">
+              <StarRatingComponent className="modal-star-review"
+                name="rate1"
+                starCount={5}
+                value={rating}
+                onStarClick={this.onStarClick.bind(this)}
+              />
+            </div>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label className="modal-question-two"><h3 className="modal-question-two">Update a Review</h3></Form.Label>
+              <Form.Control as="textarea" rows="3" name="text" value={this.state.commentText} onChange={this.handleTextComment}  />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button  onClick={this.onUpdateChanges} >
+              Submit Review
+            </Button>
+          </Modal.Footer>
+        </Modal>
           {
             this.state.commentsByCourse.map(comment => {
               return (
@@ -199,6 +303,7 @@ class Course extends Component {
                       <p className="comment-text"><i class="fas fa-user-astronaut"></i>{comment.username}</p>
                       <p className="comment-text-review">{comment.text}</p>
                   </div>
+                  <div className="comments-icons">
                   {
                     comment.ratings === 1 &&
                     <div className="comments-rating-byuser">
@@ -224,17 +329,19 @@ class Course extends Component {
                     </div>
                   }
                   {
-                    comment.ratings === 4 &&
-                    <div className="comments-rating-byuser">
-                      <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                    </div>
-                  }
-                  {
                     comment.ratings === 5 &&
                     <div className="comments-rating-byuser">
                       <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
                     </div>
                   }
+                  {
+                    this.state.user._id === comment.user &&
+                    <div className="comments-crud-buttons">
+                      <button className="comment-edit-button" onClick={() => this.setState({ editShow: true })}><i class="far fa-edit"></i></button>
+                      <button className="comment-delete-button" onClick={() => this.setState({ smShow: true })}><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                  }
+                  </div>
                 </div>
               )
             })
