@@ -20,24 +20,50 @@ class Compare extends Component {
   }
 
   componentDidMount(){
-    this.setState({
-      courses: this.props.courses
+
+    const news = this.props.courses.map(course => {
+
+      if ( typeof course.price !== "undefined" ) {
+        return course
+      }
+
+      if ( course.title.includes("Introduction") ) {
+        course.level = "beginner"
+        course.price = 746
+        return course
+      }
+
+      if ( course.title.includes("Advance") ) {
+        course.level = "advanced"
+        course.price = 746
+        return course
+      }
+
+      if ( !course.title.includes("Advance") && !course.title.includes("Introduction") ) {
+        course.level = "intermediate"
+        course.price = 746
+        return course
+      }
+
+
     })
+    this.setState({courses: news, filterCourses: news})
   }
 
   showAnyPriceFilter = () => {
+
     var allprices = this.state.courses.filter(course => course.price > 0)
     this.setState({
       filterCourses: allprices
     })
   }
-
   showPriceFirsFilter = () => {
-    var lessThan500 = this.state.courses.filter(course => course.price <= 500)
-    this.setState({
-      filterCourses: lessThan500
-    })
-  }
+  var lessThan500 = this.state.courses.filter(course => course.price <= 500)
+  this.setState({
+    filterCourses: lessThan500
+  })
+}
+
 
   showPriceSecondFilter = () => {
     var lessThan1000 = this.state.courses.filter(course => course.price > 500 && course.price <= 1000)
@@ -53,10 +79,12 @@ class Compare extends Component {
     })
   }
 
+
+
   showAllLevelCourses = () => {
     var allLevelCourses = this.state.filterCourses.filter(course => course.level === "beginner" || course.level === "intermediate" || course.level === "advanced")
     this.setState({
-      filterCourses: allLevelCourses
+      courses: allLevelCourses
     })
   }
 
@@ -82,7 +110,7 @@ class Compare extends Component {
   }
 
   render() {
-    console.log(this.props.courses)
+    console.log(this.state.courses)
     return (
       <React.Fragment>
         <div className="compare-grid">
@@ -105,46 +133,11 @@ class Compare extends Component {
                 <Form.Check onClick={this.showAdvancedCourses} type="checkbox" label="Advanced" />
               </Form.Group>
             </Card>
-            <Card className="filter-card">
-              <Card.Title>Course Station Ranking<i className="course-station-icon-compare" className="fas fa-space-shuttle"></i></Card.Title>
-              <Form.Group controlId="formBasicChecbox">
-                <div className="filter-card-stars">
-                  <Form.Check type="checkbox" label="Five stars" />
-                  <div className="filter-card-stars-icons">
-                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                  </div>
-                </div>
-                <div className="filter-card-stars">
-                  <Form.Check type="checkbox" label="Four stars" />
-                  <div  className="filter-card-stars-icons">
-                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                  </div>
-                </div>
-                <div className="filter-card-stars">
-                  <Form.Check type="checkbox" label="Three stars" />
-                  <div  className="filter-card-stars-icons">
-                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                  </div>
-                </div>
-                <div className="filter-card-stars">
-                  <Form.Check type="checkbox" label="Two stars" />
-                  <div  className="filter-card-stars-icons">
-                    <i className="fas fa-star"></i><i className="fas fa-star"></i>
-                  </div>
-                </div>
-                <div className="filter-card-stars">
-                  <Form.Check type="checkbox" label="One stars" />
-                  <div  className="filter-card-stars-icons">
-                    <i className="fas fa-star"></i>
-                  </div>
-                </div>
-              </Form.Group>
-            </Card>
           </div>
           <div className="compare-courses">
           {
-            this.state.filterCourses.length === 0 &&
-            this.state.courses.map(course => {
+
+            this.state.filterCourses.map(course => {
               return (
                 <Card className="compare-card">
                   <div className="compare-card-image-container">
@@ -180,27 +173,14 @@ class Compare extends Component {
                           <img style={{width:"113.52px", height:"59.59px"}} className="courses-container-card-plattform-image"  src="https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg" />
 
                         }
-                        {
-                          typeof course.price !== "undefined" &&
-                          <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>
-                        }
-                        {
-                          typeof course.price === "undefined" &&
-                          <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>$746</ListGroup.Item>
-                        }
-                        {
-                          course.title.includes("Introduction") &&
-                          <ListGroup.Item>Level: beginner</ListGroup.Item>
-                        }
-                        {
-                          course.title.includes("Advance") &&
-                          <ListGroup.Item>Level: advanced</ListGroup.Item>
-                        }
-                        {
-                          !course.title.includes("Advance") && !course.title.includes("Introduction") &&
-                          <ListGroup.Item>Level: intermediate</ListGroup.Item>
-                        }
 
+                        <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>
+                        <ListGroup.Item>Level: {course.level}</ListGroup.Item>
+
+                        {
+                          typeof course._id === "undefined" &&
+                          <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
+                        }
                         { typeof course._id !== "undefined" &&
                           <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
                         }
@@ -208,31 +188,6 @@ class Compare extends Component {
                   </div>
 
 
-                </Card>
-              );
-            })
-          }
-          {
-            this.state.filterCourses.length > 0 &&
-            this.state.filterCourses.map(course => {
-              return (
-                <Card className="compare-card">
-                  <div className="compare-card-image-container">
-                    <Card.Img  className="compare-card-image" variant="top" src={course.image} style={{width: '255px', height: '228px'}} />
-                  </div>
-                  <div className="compare-card-second-column">
-                    <Card.Title className="courses-container-card-title">{course.title}</Card.Title>
-                      {course.instructors.length > 0 &&
-                        <ListGroup.Item className="compare-card-instructor">Instructor {course.instructors[0]}</ListGroup.Item>
-                      }
-                      <div className="courses-container-card-details">
-                        <Card.Img className="courses-container-card-plattform-image" variant="top" src={course.plattform} />
-                        <div><i class="fas fa-hand-holding-usd"></i>${course.price}</div>
-                        <div>Level: {course.level}</div>
-                        <div>{course.comments.Rating}</div>
-                        <div className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></div>
-                      </div>
-                  </div>
                 </Card>
               );
             })
