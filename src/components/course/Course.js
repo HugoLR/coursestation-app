@@ -91,7 +91,8 @@ class Course extends Component {
      }
    }).then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data.data)
+
         this.setState({
           commentsByCourse: data.data,
           comments: data.coincidences
@@ -102,6 +103,14 @@ class Course extends Component {
               ownerComment:comment
             })
           }
+        })
+        const average = []
+        data.data.map(comment => {
+          average.push(comment.ratings)
+        })
+        const sum = average.reduce(((partial_sum, a) => partial_sum + a))
+        this.setState({
+          ratingStars: sum/average.length
         })
       })
       .catch(err => {
@@ -173,19 +182,8 @@ class Course extends Component {
     this.showComents()
   }
 
-  // ratingAverage = () => {
-  //   var sum = 0;
-  //   for (var i = 0; i < this.state.course.commentsRating.length; i++) {
-  //     sum += parseInt(this.state.course.commentsRating[i], 10)
-  //     this.setState({
-  //       ratingStars: sum/this.state.comments
-  //     })
-  //   }
-  //   console.log(this.state.ratingStars)
-  // }
-
   render() {
-    console.log("Este es el comentario que quiero", this.state.ownerComment)
+    console.log("Este es el comentario que quiero", this.state.ratingStars)
     //Variable para manejar las estrellas del rating
     const { rating } = this.state
 
@@ -206,9 +204,43 @@ class Course extends Component {
             </div>
             <div className="course-uniquecard-second_information">
               <Image className="course-uniquecard-image-plattform" src={this.state.course.plattform}/>
-              <p className="text">Rating average</p>
-              <p className="text">Level {this.state.course.level}</p>
-              <p className="text comments-length"><i class="far fa-comments"></i>{this.state.comments}</p>
+              <div className="course-uniquecard-average-ratings">
+                <p className="text">Course Station Rating {this.state.ratingStars}</p>
+                {
+                  Math.floor(this.state.ratingStars) === 1 &&
+                  <div className="average-ratings-stars">
+                    <i className="fas fa-star"></i>
+                  </div>
+                }
+                {
+                  Math.floor(this.state.ratingStars) === 2 &&
+                  <div className="average-ratings-stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                }
+                {
+                  Math.floor(this.state.ratingStars) === 3 &&
+                  <div className="average-ratings-stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                }
+                {
+                  Math.floor(this.state.ratingStars) === 4 &&
+                  <div className="average-ratings-stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                }
+                {
+                  Math.floor(this.state.ratingStars) === 5 &&
+                  <div className="average-ratings-stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                }
+              </div>
+              <div className="level-and-comments-length-container">
+                <p className="text">Level {this.state.course.level}</p>
+                <p className="text comments-length"><i class="far fa-comments"></i>{this.state.comments}</p>
+              </div>
             </div>
           </Card>
           <Card className="course-uniquecard-second_column">

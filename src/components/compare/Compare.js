@@ -179,7 +179,7 @@ class Compare extends Component {
 
                         {
                           typeof course._id === "undefined" &&
-                          <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
+                          <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course.hash}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
                         }
                         { typeof course._id !== "undefined" &&
                           <ListGroup.Item className="compare-course-go-button"><Link to={`/course/${course._id}`}><Button variant="outline-primary">Go</Button></Link></ListGroup.Item>
