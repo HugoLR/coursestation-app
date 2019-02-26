@@ -86,10 +86,10 @@
 .user-comments-container {
   border-radius: 20px;
   padding: 10px;
-  width: 50%;
+  width: 60%;
   align-self: flex-start;
   margin-left: 195px;
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   background-color: #F0F2F5;
@@ -103,6 +103,7 @@
 .comment-text {
   font-weight: bold;
   margin: 0;
+  margin-bottom: 13px;
 }
 
 .user-comments-rating {
@@ -145,6 +146,7 @@ i {
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  width: 300px;
 }
 
 .fa-trash-alt {
@@ -168,4 +170,25 @@ i {
 
 .comments-crud-buttons {
   display: flex;
+}
+
+.comments-icons-date-rating-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-date {
+  font-size: 13px;
+  margin-right: 10px;
+}
+
+.actual-date {
+  display: flex;
+  width: 60%;
+  margin-top: 40px;
+  margin-right: 110px;
+}
+
+.actual-date-comment {
+  margin-right: 10px;
 }
