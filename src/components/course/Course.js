@@ -132,7 +132,7 @@ sendMessage = () => {
       course:this.props.match.params.courseId,
     })
   })
-  // this.sendMessage()
+  this.sendMessage()
   this.handleClose()
   alert("Thanks, your comment will help other students")
 }
