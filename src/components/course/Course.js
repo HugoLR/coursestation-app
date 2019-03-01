@@ -31,6 +31,7 @@ class Course extends Component {
     }
   }
 
+  /*Se renderiza primero la información del curso*/
   componentDidMount() {
     fetch(`${API_URL}/courses/${this.props.match.params.courseId}`, {
       method: 'get',
@@ -49,7 +50,7 @@ class Course extends Component {
       })
   }
 
- sendMessage = () => {
+sendMessage = () => {
     const nexmo = new Nexmo({
       apiKey: '8003c938',
       apiSecret: '5I5UdgaddIhaCix2'
@@ -110,13 +111,13 @@ class Course extends Component {
         })
         const sum = average.reduce(((partial_sum, a) => partial_sum + a))
         this.setState({
-          ratingStars: sum/average.length
+          ratingStars: (sum/average.length).toFixed(2)
         })
       })
       .catch(err => {
         console.log(`err: ${err}`)
       })
- }
+  }
 
   onCreateReview = () => {
   fetch(`${API_URL}/users/${this.state.user._id}/comments`, {
@@ -153,7 +154,6 @@ class Course extends Component {
   }
 
   onDeletComment = () => {
-    // console.log("Esta es la variable que querio",  this.state.ownerComment._id)
     fetch(`${API_URL}/users/${this.state.user._id}/comments`, {
       method: 'DELETE',
       headers: {
@@ -184,14 +184,13 @@ class Course extends Component {
 
   render() {
     console.log("Este es el comentario que quiero", this.state.ratingStars)
-    //Variable para manejar las estrellas del rating
-    const { rating } = this.state
 
-    //Variable para modal de eliminar comentarios
-    let smClose = () => this.setState({ smShow: false });
+    const { rating } = this.state /*Variable para manejar las estrellas del rating */
 
-    //Variable para la fecha del comentario
-    const commentDate = this.state.ownerComment.date
+    let smClose = () => this.setState({ smShow: false }); /*Variable para modal de elimiar comentarios*/
+
+
+    const commentDate = this.state.ownerComment.date /*Variable para la fecha del comentario*/
 
     return (
       <div className="course-route-container">
@@ -247,7 +246,19 @@ class Course extends Component {
             <Image className="course-uniquecard-image-course" src={this.state.course.image}/>
             <div className="course-uniquecard-second_column-buttons">
               <Button onClick={this.handleShow} className="course-uniquecard-second_column-button" variant="outline-primary">Comment</Button>
-              <Button className="course-uniquecard-second_column-button" variant="outline-primary"><a href={`https://www.udemy.com${this.state.course.url}`} target="_blank">Go to the Course</a></Button>
+              {
+                this.state.course.plattform === "https://www.udemy.com/staticx/udemy/images/v6/default-meta-image.png" &&
+                <Button className="course-uniquecard-second_column-button" variant="outline-primary"><a href={`https://www.udemy.com${this.state.course.url}`} target="_blank">Go to the Course</a></Button>
+              }
+              {
+                this.state.course.plattform === "https://d20vrrgs8k4bvw.cloudfront.net/images/open-graph/udacity.png" &&
+                <Button className="course-uniquecard-second_column-button" variant="outline-primary"><a href={`https://www.udacity.com/course/${this.state.course.url}`} target="_blank">Go to the Course</a></Button>
+              }
+              {
+                this.state.course.plattform === "https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg" &&
+                <Button className="course-uniquecard-second_column-button" variant="outline-primary"><a href={`https://frontendmasters.com/courses/${this.state.course.url}`} target="_blank">Go to the Course</a></Button>
+              }
+
             </div>
           </Card>
         </Card>

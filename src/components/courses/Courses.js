@@ -96,11 +96,23 @@ class Courses extends Component {
 
                     <ListGroup.Item>Instructor {course.summary.split(" ").slice(0, 1).join(" ")}</ListGroup.Item>
                   }
-                  {
+                  {/*{
                     typeof course.plattform !== "undefined" &&
-                    <ListGroup.Item><Card.Img variant="top" src={course.plattform} /></ListGroup.Item>
+                    <ListGroup.Item><Card.Img variant="top" src={course.plattform} style={{width:"246px", height:"129px"}}/></ListGroup.Item>
+                  }*/}
+                  {
+                    course.plattform === "https://www.udemy.com/staticx/udemy/images/v6/default-meta-image.png" &&
+                    <ListGroup.Item><Card.Img variant="top" src={course.plattform} style={{width:"246px", height:"129px"}}/></ListGroup.Item>
                   }
                   {
+                    course.plattform === "https://d20vrrgs8k4bvw.cloudfront.net/images/open-graph/udacity.png" &&
+                    <ListGroup.Item><Card.Img variant="top" src={course.plattform} style={{width:"246px", height:"129px"}}/></ListGroup.Item>
+                  }
+                  {
+                    course.plattform === "https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg" &&
+                    <ListGroup.Item><Card.Img variant="top" src={course.plattform} style={{width:"200px", height:"100px"}}/></ListGroup.Item>
+                  }
+                  {/*{
                     typeof course.plattform === "undefined" &&
                     <ListGroup.Item>
                       <Card.Img
@@ -108,8 +120,7 @@ class Courses extends Component {
                       variant="top"
                        src="https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg"/>
                     </ListGroup.Item>
-
-                  }
+                  }*/}
                 </ListGroup>
               </Card>
             );

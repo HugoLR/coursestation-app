@@ -164,14 +164,26 @@ class Compare extends Component {
                     }
 
                       <div className="courses-container-card-details">
-                        {
+                        {/*{
                           typeof course.plattform !== "undefined" &&
                           <img className="courses-container-card-plattform-image"  src={course.plattform} />
-                        }
-                        {
+                        }*/}
+                        {/*{
                           typeof course.plattform === "undefined" &&
                           <img style={{width:"113.52px", height:"59.59px"}} className="courses-container-card-plattform-image"  src="https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg" />
 
+                        }*/}
+                        {
+                          course.plattform === "https://www.udemy.com/staticx/udemy/images/v6/default-meta-image.png" &&
+                          <img className="courses-container-card-plattform-image"  src={course.plattform} />
+                        }
+                        {
+                          course.plattform === "https://d20vrrgs8k4bvw.cloudfront.net/images/open-graph/udacity.png" &&
+                          <img className="courses-container-card-plattform-image"  src={course.plattform} />
+                        }
+                        {
+                          course.plattform === "https://pbs.twimg.com/profile_images/911069740164108289/ZiVAi6zG_400x400.jpg" &&
+                          <img className="courses-container-card-plattform-image" style={{width:"113.52px", height:"59.59px"}}  src={course.plattform} />
                         }
 
                         <ListGroup.Item><i class="fas fa-hand-holding-usd"></i>${course.price}</ListGroup.Item>

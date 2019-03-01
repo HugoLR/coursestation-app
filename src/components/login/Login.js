@@ -37,7 +37,7 @@ class Login extends Component {
           this.props.history.push("/" + url.split("/")[1]);
         } else {
           alert("You login in Course Station")
-          this.props.history.push("/");
+          window.location.reload(this.props.history.push("/"));
         }
       } else {
         this.setState({
